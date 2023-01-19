@@ -66,5 +66,70 @@ public class Campo {
 	boolean vizinhancaSegura() {
 		return vizinhos.stream().noneMatch(v-> v.minado);//se deu match em cima desse predicado quer dizer que nem um vizinho ao redor está minado
 	}
+	
+	void minar() {
+		
+			minado = true;
+		
+	}
+	
+	public boolean isMarcado() {
+		return marcado;
+	}
+	
+	
+	 void setAberto(boolean aberto) {
+		this.aberto = aberto;
+	}
+
+	public boolean isAberto() {
+		return aberto;
+	}
+	
+	public boolean isFechado() {
+		return !aberto;
+	}
+	public boolean isMinado() {
+		return minado;
+	}
+
+	public int getLinha() {
+		return linha;
+	}
+
+	public int getColuna() {
+		return coluna;
+	}
+	
+	boolean objetivoAlcancado() {//testar
+		boolean desvendado = !minado && aberto;
+		boolean protegido = minado && marcado;
+		
+		return desvendado || protegido;
+	}
+	
+	Long minasNaVizinhanca() {//testar
+		return vizinhos.stream().filter(v->v.minado).count();
+	}
+	void reiniciar() {//testar
+		aberto = false;
+		minado = false;
+		marcado = false;
+	}
+	public String toString() {//testar
+		if(marcado) {
+			return "x";
+		}else if(aberto && minado) {
+			return "*";
+			
+		}else if (aberto && minasNaVizinhanca()>0) {
+			return Long.toString(minasNaVizinhanca());
+		}else if (aberto) {
+			return " ";
+		}
+		else {
+			return"?";
+		}
+	}
 
 }
